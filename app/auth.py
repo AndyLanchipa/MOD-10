@@ -1,10 +1,15 @@
 from passlib.context import CryptContext
 from jose import JWTError, jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 from app.config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Configure bcrypt context with explicit backend
+pwd_context = CryptContext(
+    schemes=["bcrypt"], 
+    deprecated="auto",
+    bcrypt__default_rounds=12
+)
 
 
 def hash_password(password: str) -> str:
@@ -17,6 +22,9 @@ def hash_password(password: str) -> str:
     Returns:
         str: Hashed password
     """
+    # Ensure password is within bcrypt's 72-byte limit
+    if len(password.encode('utf-8')) > 72:
+        raise ValueError("Password too long for bcrypt (max 72 bytes)")
     return pwd_context.hash(password)
 
 
@@ -47,9 +55,9 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     """
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, settings.secret_key, algorithm=settings.algorithm)
     return encoded_jwt
