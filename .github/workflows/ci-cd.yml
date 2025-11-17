@@ -108,7 +108,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v5
       with:
-        images: ${{ secrets.DOCKER_USERNAME }}/fastapi-secure-user-app
+        images: ${{ secrets.DOCKER_USERNAME }}/mod10-fastapi-project
         tags: |
           type=ref,event=branch
           type=ref,event=pr
@@ -129,4 +129,4 @@ jobs:
       run: |
         docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
           -v $PWD:/workspace aquasec/trivy:latest image \
-          ${{ secrets.DOCKER_USERNAME }}/fastapi-secure-user-app:latest
+          ${{ secrets.DOCKER_USERNAME }}/mod10-fastapi-project:latest

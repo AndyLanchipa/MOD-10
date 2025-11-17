@@ -206,12 +206,12 @@ DOCKER_PASSWORD - Your Docker Hub access token
 ## Docker Hub Repository
 
 The application is automatically deployed to Docker Hub at:
-**https://hub.docker.com/r/andylanchipa/fastapi-secure-user-app**
+**https://hub.docker.com/r/andylanchipa/mod10-fastapi-project**
 
 ### Pull and Run from Docker Hub
 ```bash
-docker pull andylanchipa/fastapi-secure-user-app:latest
-docker run -p 8000:8000 -e DATABASE_URL=your_db_url andylanchipa/fastapi-secure-user-app:latest
+docker pull andylanchipa/mod10-fastapi-project:latest
+docker run -p 8000:8000 -e DATABASE_URL=your_db_url andylanchipa/mod10-fastapi-project:latest
 ```
 
 ## Development Workflow
