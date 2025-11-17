@@ -3,12 +3,14 @@ from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 from app.config import settings
+import os
 
-# Configure bcrypt context with explicit backend
+# Configure bcrypt context with explicit backend and version compatibility
 pwd_context = CryptContext(
     schemes=["bcrypt"], 
     deprecated="auto",
-    bcrypt__default_rounds=12
+    bcrypt__default_rounds=12,
+    bcrypt__default_ident="2b"
 )
 
 
